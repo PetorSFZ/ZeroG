@@ -127,6 +127,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/SampleCommon)
 # ------------------------------------------------------------------------------------------------
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Sample-1-Experiments)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Sample-2-Raymarching)
 
 # Symlink resource ("res") directory into build directory
 # ------------------------------------------------------------------------------------------------
