@@ -28,16 +28,18 @@ VSOutput VSMain(VSInput input)
 
 
 float signedDistanceFunction(float3 p) {
-	const float sphereRadius = 1.0f;
-	const float3 spherePos = float3(0.0f, 0.0f, 3.0f);
-	return length(spherePos - p) - sphereRadius;
+	const float sphereRadius = 1.5f;
+	const float noiseAmplitude = 0.5f;
+	const float3 spherePos = float3(0.0f, 0.0f, 5.0f);
+	float displacement = ((sin(16.0f * p.x) * sin(16.0f * p.y) * sin(16.0f * p.z) + 1.0f) / 2.0f) * noiseAmplitude;
+	return length(spherePos - p) - (sphereRadius + displacement);
 }
 
 
 float march(float3 origin, float3 dir)
 {
-	const int MAX_STEPS = 200;
-	const float DIST = 0.025f;
+	const int MAX_STEPS = 2048;
+	const float DIST = 0.005f;
 	float3 currentPoint = origin;
 	float currentDist = 0.0f;
 	for (int i = 0; i < MAX_STEPS; i++) {
@@ -87,8 +89,11 @@ float4 PSMain(PSInput input) : SV_TARGET
 
 	float intensity = dot(normal, toLight);
 	intensity = max(intensity, 0.3);
-
 	res = float3(1.0f, 1.0f, 1.0f) * intensity;
+
+	//float displacement = (sin(16.0f * hitPos.x) * sin(16.0f * hitPos.y) * sin(16.0f * hitPos.z) + 1.0f) / 2.0f;
+	//res = float3(1.0f, 1.0f, 1.0f) * displacement * intensity;
+
 
 	return float4(res, 1.0f);
 }
